@@ -451,6 +451,10 @@ namespace Huffman2
 			byte currentByte; //current byte being read
 			int endOfBuffer; //practically, it sotres how many bytes are in readingBuffer 
 
+			/// <summary>
+			/// Method for reading next Node
+			/// </summary>
+			/// <returns></returns>
 			public long NextNode()
 			{
 
