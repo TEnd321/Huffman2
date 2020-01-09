@@ -443,6 +443,23 @@ namespace Huffman2
 
 		}
 
+		/// <summary>
+		/// Struct for storing information about Node found in .huff file.
+		/// </summary>
+		public struct NodeInfo
+		{
+			public byte Symbol { get; set; }
+			public long Weight { get; set; }
+			public bool IsLeaf { get; set; }
+
+			public NodeInfo(byte symbol, long weight, bool isLeaf)
+			{
+				Symbol = symbol;
+				Weight = weight;
+				IsLeaf = isLeaf;
+			}
+		}
+
 		public class HuffmanLoader
 		{
 			BinaryReader binaryReader; //to fill readingBuffer
@@ -452,13 +469,13 @@ namespace Huffman2
 			int endOfBuffer; //practically, it sotres how many bytes are in readingBuffer 
 
 			/// <summary>
-			/// Method for reading next Node
+			/// Method for reading next Node.
 			/// </summary>
-			/// <returns></returns>
+			/// <returns>Long representation of next Node.</returns>
 			public long NextNode()
 			{
 
-				return 0;
+				return ;
 			}
 
 			public void SkipHeader()
@@ -488,7 +505,7 @@ namespace Huffman2
 			/// <summary>
 			/// Will read next byte from reading Buffer to currentByte and advance bufferIndex. Will read next 4096 bytes long segment, if index reaches end.
 			/// </summary>
-			public void NextByte()
+			public byte NextByte()
 			{
 				if (bufferIndex == endOfBuffer || bufferIndex == -1)
 				{
@@ -497,7 +514,13 @@ namespace Huffman2
 				}
 				currentByte = readingBuffer[bufferIndex];
 				bufferIndex++;
+				return currentByte;
 			}
+		}
+
+		public class TreeLoader
+		{
+			HuffmanLoader huffmanLoader;
 		}
 
 		public static void Main(string[] args)
