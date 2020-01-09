@@ -449,7 +449,7 @@ namespace Huffman2
 		public struct NodeInfo
 		{
 			public byte Symbol { get; set; }
-			public long Weight { get; set; }
+			public ulong Weight { get; set; }
 			public bool IsLeaf { get; set; }
 
 			public NodeInfo(byte symbol, long weight, bool isLeaf)
@@ -472,10 +472,32 @@ namespace Huffman2
 			/// Method for reading next Node.
 			/// </summary>
 			/// <returns>Long representation of next Node.</returns>
-			public long NextNode()
+			public NodeInfo NextNode()
 			{
+				//TODO: Check for error in reading next byte!!
 
-				return ;
+				ulong tempWeight = 0;
+				ulong tempULong = 0;
+				byte tempSymbol = 0;
+				bool tempIsLeaf = false;
+				ushort binShift = 8;
+
+				tempWeight = NextByte();
+				if ((tempWeight | 1UL) == 1)
+					tempIsLeaf = true;
+				else
+					tempIsLeaf = false;
+				for (int i = 0; i < 7; i++)
+				{
+					tempULong = NextByte();
+					tempULong <<= binShift;
+					tempWeight |= tempULong;
+					binShift *= 8;
+				}
+				tempWeight >>= 1;
+				tempSymbol = NextByte();
+
+				return new NodeInfo(tempSymbol, tempWeight, tempIsLeaf);
 			}
 
 			public void SkipHeader()
@@ -495,9 +517,10 @@ namespace Huffman2
 				{
 					endOfBuffer = binaryReader.Read(toReturn, 0, 4096);
 				}
-				catch
+				finally
 				{
-					return null;
+					Console.WriteLine("File Error");
+					binaryReader.Close();
 				}
 				return toReturn;
 			}
