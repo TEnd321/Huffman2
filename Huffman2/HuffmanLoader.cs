@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Huffman2
+namespace Huffman3
 {
 	public class HuffmanLoader
 	{
-		BinaryReader binaryReader; //to fill readingBuffer
+		Stream ReadingStream { get; set; } //to fill readingBuffer
 		byte[] readingBuffer; //buffer for reading bytes from input
-		int bufferIndex; //index of buffer byte next to be read
-		byte currentByte; //current byte being read
-		int endOfBuffer; //practically, it sotres how many bytes are in readingBuffer 
+		int bufferIndex = 0; //index of buffer byte next to be read
+		byte currentByte = 0; //current byte being read
+		int endOfBuffer = 0; //practically, it sotres how many bytes are in readingBuffer 
+
+		public HuffmanLoader(Stream stream)
+		{
+			ReadingStream = stream;
+		}
 
 		/// <summary>
 		/// Method for reading next Node.
@@ -47,11 +52,6 @@ namespace Huffman2
 				return new HuffmanTree(-1, (long)tempWeight);
 		}
 
-		public void SkipHeader()
-		{
-			bufferIndex = 8;
-		}
-
 		public bool NextBit()
 		{
 			return false;
@@ -62,12 +62,12 @@ namespace Huffman2
 			byte[] toReturn = new byte[4096];
 			try
 			{
-				endOfBuffer = binaryReader.Read(toReturn, 0, 4096);
+				endOfBuffer = ReadingStream.Read(toReturn, 0, 4096);
 			}
 			catch
 			{
 				Console.WriteLine("File Error");
-				binaryReader.Close();
+				ReadingStream.Dispose();
 				Environment.Exit(1);
 			}
 			return toReturn;
@@ -81,7 +81,6 @@ namespace Huffman2
 			if (bufferIndex == endOfBuffer || bufferIndex == -1)
 			{
 				readingBuffer = ReadNextSegment();
-				SkipHeader();
 			}
 			currentByte = readingBuffer[bufferIndex];
 			bufferIndex++;

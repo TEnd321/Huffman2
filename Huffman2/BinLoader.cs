@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Huffman2
+namespace Huffman3
 {
 	class BinLoader
 	{

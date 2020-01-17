@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Huffman2
+namespace Huffman3
 {
 	public class HuffmanTree : IComparable
 	{

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Huffman2
+namespace Huffman3
 {
 	class Program {
 
