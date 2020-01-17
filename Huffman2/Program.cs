@@ -452,7 +452,7 @@ namespace Huffman2
 			public ulong Weight { get; set; }
 			public bool IsLeaf { get; set; }
 
-			public NodeInfo(byte symbol, long weight, bool isLeaf)
+			public NodeInfo(byte symbol, ulong weight, bool isLeaf)
 			{
 				Symbol = symbol;
 				Weight = weight;
@@ -517,10 +517,11 @@ namespace Huffman2
 				{
 					endOfBuffer = binaryReader.Read(toReturn, 0, 4096);
 				}
-				finally
+				catch
 				{
 					Console.WriteLine("File Error");
 					binaryReader.Close();
+					Environment.Exit(1);
 				}
 				return toReturn;
 			}
