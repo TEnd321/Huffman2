@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Huffman2", "Huffman2\Huffman2.csproj", "{18FEE170-07BA-4AE9-BC78-07CB4832C10F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Huffman3", "Huffman2\Huffman3.csproj", "{18FEE170-07BA-4AE9-BC78-07CB4832C10F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{972D24B6-8A42-4B4F-AC1B-D798875778EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{972D24B6-8A42-4B4F-AC1B-D798875778EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

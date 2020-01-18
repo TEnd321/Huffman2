@@ -11,11 +11,33 @@ namespace Huffman3
 		byte[] readingBuffer; //buffer for reading bytes from input
 		int bufferIndex = 0; //index of buffer byte next to be read
 		byte currentByte = 0; //current byte being read
+		short currentBit = 8; //current bit being read, indexing from 0
 		int endOfBuffer = 0; //practically, it sotres how many bytes are in readingBuffer 
 
 		public HuffmanLoader(Stream stream)
 		{
 			ReadingStream = stream;
+		}
+
+		public bool CheckHeader()
+		{
+			if (NextByte() != 0x7B)
+				return false;
+			if (NextByte() != 0x68)
+				return false;
+			if (NextByte() != 0x75)
+				return false;
+			if (NextByte() != 0x7C)
+				return false;
+			if (NextByte() != 0x6D)
+				return false;
+			if (NextByte() != 0x7D)
+				return false;
+			if (NextByte() != 0x66)
+				return false;
+			if (NextByte() != 0x66)
+				return false;
+			return true;
 		}
 
 		/// <summary>
@@ -39,7 +61,7 @@ namespace Huffman3
 				tempWeight |= tempULong;
 				binShift += 8;
 			}
-			if ((tempWeight | 1UL) == 1)
+			if ((tempWeight & 1UL) == 1)
 				tempIsLeaf = true;
 			else
 				tempIsLeaf = false;
@@ -54,7 +76,21 @@ namespace Huffman3
 
 		public bool NextBit()
 		{
-			return false;
+			if (currentBit == 8)
+			{
+				NextByte();
+				currentBit = 0;
+			}
+			if (((currentByte >> currentBit) & 1) == 1)
+			{
+				currentBit++;
+				return true;
+			}
+			else
+			{
+				currentBit++;
+				return false;
+			}
 		}
 
 		public byte[] ReadNextSegment()
@@ -81,6 +117,7 @@ namespace Huffman3
 			if (bufferIndex == endOfBuffer || bufferIndex == -1)
 			{
 				readingBuffer = ReadNextSegment();
+				bufferIndex = 0;
 			}
 			currentByte = readingBuffer[bufferIndex];
 			bufferIndex++;
